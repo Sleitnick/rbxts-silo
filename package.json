@@ -10,6 +10,7 @@
   },
   "keywords": ["silo"],
   "author": "sleitnick",
+  "repository": "github:Sleitnick/rbxts-silo",
   "license": "MIT",
   "types": "out/index.d.ts",
   "files": [
