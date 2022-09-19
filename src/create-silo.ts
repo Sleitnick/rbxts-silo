@@ -1,5 +1,11 @@
 import { Actions, Silo, Subscriber } from "./types";
 
+/**
+ * Create a new Silo.
+ * @param initialState initial state
+ * @param modifiers modifier functions
+ * @returns Silo
+ */
 export function createSilo<S extends object, M extends object>(initialState: S, modifiers: M): Silo<S, M> {
 	let state = table.freeze(table.clone(initialState));
 	let modifying = false;

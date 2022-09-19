@@ -15,6 +15,11 @@ function combineState<S extends SiloMap<S>>(silos: S) {
 	return state as CombinedState<S>;
 }
 
+/**
+ * Combine silos.
+ * @param silos Silos to combine
+ * @returns Combined silos
+ */
 export function combineSilos<S extends SiloMap<S>>(silos: S): CombinedSilo<S> {
 	let state = combineState(silos);
 
