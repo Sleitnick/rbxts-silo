@@ -114,7 +114,7 @@ interface AnotherModifiers {
 }
 const anotherSilo = createSilo<AnotherState, AnotherModifiers>(
 	{ message: "" },
-	{ setMessage: (state, msg) => { return {...state, message: msg} }},
+	{ setMessage: (state, msg) => ({...state, message: msg}) },
 );
 
 // Combine `mySilo` and `anotherSilo`:
