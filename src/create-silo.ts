@@ -57,12 +57,17 @@ export function createSilo<S extends object, M extends object>(initialState: S, 
 		}
 	};
 
-	const observe = <T>(selector: (state: S) => T, observer: (value: T) => void) => {
+	const observe = <T>(
+		selector: (state: S) => T,
+		observer: (value: T) => void,
+		changed?: (newValue: T, oldValue: T) => boolean,
+	) => {
 		let value = selector(getState());
 		observer(value);
+		const didChange = changed ?? ((newValue: T, oldValue: T) => newValue !== oldValue);
 		return subscribe((newState) => {
 			const newValue = selector(newState);
-			if (newValue === value) return;
+			if (!didChange(newValue, value)) return;
 			value = newValue;
 			observer(value);
 		});
