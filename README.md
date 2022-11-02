@@ -73,6 +73,12 @@ will also include a copy of the old state.
 Use the `observe` function to observe a specific selection of the state, which will then fire
 the given observer function anytime the selection changes, including the immediate value.
 
+Observers can optionally be given a `changed` callback, which will control whether or not the
+observer is triggered. Any time the silo's state changes, the `changed` callback will be given
+the new and old value of the selector, and the callback must return whether or not the value
+has changed. This is useful for checking for table value changes or other dynamic changes that
+go beyond the default `old !== new` comparison.
+
 ```ts
 // Subscribe to changes to the state:
 mySilo.subscribe((newState, oldState) => {
@@ -83,6 +89,14 @@ mySilo.subscribe((newState, oldState) => {
 mySilo.observe((state) => state.points, (points) => {
 	print(`Points: ${points}`);
 });
+
+// Observing state with a specified `changed` callback:
+mySilo.observe(
+	(state => state.points),
+	(points) => print(points),
+	// Only trigger observer if points have changed by more than 5:
+	(newPoints, oldPoints) => math.abs(newPoints - oldPoints) > 5,
+);
 
 // The `subscribe` and `observe` functions return functions that can be called
 // in order to stop subscribing/observing:
